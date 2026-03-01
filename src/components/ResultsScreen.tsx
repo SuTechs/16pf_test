@@ -1,231 +1,230 @@
-import { useMemo, useState } from 'react';
-import {
-    RadarChart,
-    Radar,
-    PolarGrid,
-    PolarAngleAxis,
-    PolarRadiusAxis,
-    ResponsiveContainer,
-    Tooltip,
-} from 'recharts';
-import { RotateCcw, ChevronDown, ChevronUp, TrendingUp, TrendingDown } from 'lucide-react';
-import type { StenScores, PrimaryFactor } from '../types';
+import { useMemo, useRef, useEffect, useState } from 'react';
+import { RotateCcw, AlertTriangle } from 'lucide-react';
+import type { StenScores } from '../types';
 import { factorDescriptions } from '../data/factorDescriptions';
 
 interface ResultsScreenProps {
     scores: StenScores;
+    mdSten: number;
     onReset: () => void;
 }
 
-export function ResultsScreen({ scores, onReset }: ResultsScreenProps) {
-    const [expandedFactor, setExpandedFactor] = useState<PrimaryFactor | null>(null);
+const STEN_COLS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-    const chartData = useMemo(
-        () =>
-            factorDescriptions.map((fd) => ({
-                factor: fd.code,
-                name: fd.name,
-                score: scores[fd.code],
-                fullMark: 10,
-            })),
+export function ResultsScreen({ scores, mdSten, onReset }: ResultsScreenProps) {
+    const gridRef = useRef<HTMLDivElement>(null);
+    const [dotPositions, setDotPositions] = useState<{ x: number; y: number }[]>([]);
+
+    const rows = useMemo(
+        () => factorDescriptions.map((fd) => ({ ...fd, score: scores[fd.code] })),
         [scores],
     );
 
-    const toggleFactor = (code: PrimaryFactor) => {
-        setExpandedFactor((prev) => (prev === code ? null : code));
-    };
+    // Calculate SVG line positions after render
+    useEffect(() => {
+        if (!gridRef.current) return;
+        const positions: { x: number; y: number }[] = [];
+        const gridRect = gridRef.current.getBoundingClientRect();
+
+        rows.forEach((row) => {
+            const dot = gridRef.current?.querySelector(`[data-dot="${row.code}"]`);
+            if (dot) {
+                const dotRect = dot.getBoundingClientRect();
+                positions.push({
+                    x: dotRect.left - gridRect.left + dotRect.width / 2,
+                    y: dotRect.top - gridRect.top + dotRect.height / 2,
+                });
+            }
+        });
+
+        setDotPositions(positions);
+    }, [rows]);
+
+    const linePath = useMemo(() => {
+        if (dotPositions.length < 2) return '';
+        return dotPositions
+            .map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x} ${p.y}`)
+            .join(' ');
+    }, [dotPositions]);
 
     return (
         <div className="flex-1 flex flex-col min-h-0 overflow-y-auto">
-            <div className="w-full max-w-3xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
+            <div className="w-full max-w-5xl mx-auto px-3 sm:px-6 py-6 sm:py-8">
                 {/* Header */}
                 <div className="text-center mb-6 sm:mb-8">
                     <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-                        Your Personality Profile
+                        Personality Profile
                     </h1>
                     <p className="text-surface-400 text-sm sm:text-base">
-                        16 personality dimensions on a 1–10 Sten scale
+                        Standard Ten (Sten) Score Profile — 16PF Form C
                     </p>
                 </div>
 
-                {/* Radar Chart */}
-                <div className="bg-surface-800/40 backdrop-blur-xl border border-surface-700/50 rounded-2xl p-3 sm:p-6 mb-6 sm:mb-8">
-                    <ResponsiveContainer width="100%" height={340}>
-                        <RadarChart
-                            data={chartData}
-                            cx="50%"
-                            cy="50%"
-                            outerRadius="72%"
-                        >
-                            <PolarGrid
-                                stroke="rgba(148, 163, 184, 0.15)"
-                                gridType="polygon"
-                            />
-                            <PolarAngleAxis
-                                dataKey="factor"
-                                tick={{
-                                    fill: '#94a3b8',
-                                    fontSize: 11,
-                                    fontWeight: 600,
-                                }}
-                            />
-                            <PolarRadiusAxis
-                                angle={90}
-                                domain={[0, 10]}
-                                tick={{ fill: '#475569', fontSize: 10 }}
-                                tickCount={6}
-                                axisLine={false}
-                            />
-                            <Radar
-                                name="Score"
-                                dataKey="score"
-                                stroke="#6366f1"
-                                fill="#6366f1"
-                                fillOpacity={0.2}
-                                strokeWidth={2}
-                                dot={{
-                                    r: 3,
-                                    fill: '#818cf8',
-                                    stroke: '#6366f1',
-                                    strokeWidth: 1,
-                                }}
-                            />
-                            <Tooltip
-                                contentStyle={{
-                                    backgroundColor: '#1e293b',
-                                    border: '1px solid #334155',
-                                    borderRadius: '12px',
-                                    fontSize: '13px',
-                                    padding: '8px 12px',
-                                }}
-                                itemStyle={{ color: '#a5b4fc' }}
-                                labelStyle={{ color: '#f1f5f9', fontWeight: 600 }}
-                            />
-                        </RadarChart>
-                    </ResponsiveContainer>
+                {/* MD Score Badge */}
+                <div className="flex justify-center mb-5">
+                    <div className={`
+            inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium
+            ${mdSten >= 7
+                            ? 'bg-amber-500/15 border border-amber-500/30 text-amber-400'
+                            : 'bg-surface-800/60 border border-surface-700/50 text-surface-300'
+                        }
+          `}>
+                        <AlertTriangle className="w-4 h-4" />
+                        Motivational Distortion (MD) Sten: <span className="font-bold text-white">{mdSten}</span>
+                        {mdSten >= 7 && <span className="text-xs opacity-75">(corrections applied)</span>}
+                    </div>
                 </div>
 
-                {/* Factor Breakdown */}
-                <div className="mb-6 sm:mb-8">
-                    <h2 className="text-lg sm:text-xl font-bold text-white mb-4">
-                        Factor Breakdown
-                    </h2>
+                {/* Profile Grid */}
+                <div className="bg-surface-800/40 backdrop-blur-xl border border-surface-700/50 rounded-2xl p-2 sm:p-4 mb-6 sm:mb-8 overflow-x-auto">
+                    <div ref={gridRef} className="relative min-w-[700px]">
+                        {/* SVG connecting line */}
+                        {linePath && (
+                            <svg
+                                className="absolute inset-0 w-full h-full pointer-events-none z-10"
+                                style={{ overflow: 'visible' }}
+                            >
+                                <path
+                                    d={linePath}
+                                    fill="none"
+                                    stroke="#6366f1"
+                                    strokeWidth="2"
+                                    strokeLinejoin="round"
+                                    strokeLinecap="round"
+                                    opacity="0.7"
+                                />
+                            </svg>
+                        )}
 
-                    <div className="space-y-2 sm:space-y-2.5">
-                        {factorDescriptions.map((fd) => {
-                            const score = scores[fd.code];
-                            const isLow = score <= 5;
-                            const isExpanded = expandedFactor === fd.code;
-
-                            return (
+                        {/* Header row */}
+                        <div className="grid grid-cols-[minmax(120px,1fr)_repeat(10,1fr)_minmax(120px,1fr)] items-end border-b border-surface-600/40 pb-2 mb-1">
+                            <div className="text-[10px] sm:text-xs font-semibold text-surface-400 uppercase tracking-wider px-1.5">
+                                Low Score
+                            </div>
+                            {STEN_COLS.map((s) => (
                                 <div
-                                    key={fd.code}
-                                    className="bg-surface-800/40 border border-surface-700/50 rounded-xl overflow-hidden transition-all duration-200"
+                                    key={s}
+                                    className={`text-center text-[10px] sm:text-xs font-bold ${s === 5 || s === 6 ? 'text-primary-400' : 'text-surface-500'
+                                        }`}
                                 >
-                                    <button
-                                        onClick={() => toggleFactor(fd.code)}
-                                        className="w-full flex items-center gap-3 sm:gap-4 px-4 sm:px-5 py-3 sm:py-3.5 text-left cursor-pointer"
-                                    >
-                                        {/* Score badge */}
-                                        <span
+                                    {s}
+                                </div>
+                            ))}
+                            <div className="text-[10px] sm:text-xs font-semibold text-surface-400 uppercase tracking-wider px-1.5 text-right">
+                                High Score
+                            </div>
+                        </div>
+
+                        {/* Factor rows */}
+                        {rows.map((row, rowIdx) => (
+                            <div
+                                key={row.code}
+                                className={`
+                  grid grid-cols-[minmax(120px,1fr)_repeat(10,1fr)_minmax(120px,1fr)] items-center
+                  ${rowIdx % 2 === 0 ? 'bg-surface-900/20' : ''}
+                  border-b border-surface-700/20
+                `}
+                                style={{ minHeight: '36px' }}
+                            >
+                                {/* Left description */}
+                                <div className="px-1.5 sm:px-2 py-1.5">
+                                    <span className="text-primary-400 font-bold text-[11px] sm:text-xs mr-1">{row.code}</span>
+                                    <span className="text-surface-400 text-[10px] sm:text-[11px] leading-tight">
+                                        {row.lowLabel}
+                                    </span>
+                                </div>
+
+                                {/* Sten columns */}
+                                {STEN_COLS.map((s) => {
+                                    const isAvgZone = s === 5 || s === 6;
+                                    const isScore = row.score === s;
+
+                                    return (
+                                        <div
+                                            key={s}
                                             className={`
-                        shrink-0 flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-lg text-sm font-bold
-                        ${score >= 8
-                                                    ? 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/30'
-                                                    : score >= 4
-                                                        ? 'bg-primary-500/15 text-primary-400 border border-primary-500/30'
-                                                        : 'bg-amber-500/15 text-amber-400 border border-amber-500/30'
-                                                }
+                        flex items-center justify-center h-full
+                        border-l border-surface-700/15
+                        ${isAvgZone ? 'bg-primary-500/[0.04]' : ''}
                       `}
                                         >
-                                            {score}
-                                        </span>
-
-                                        {/* Factor info */}
-                                        <div className="flex-1 min-w-0">
-                                            <div className="flex items-center gap-2">
-                                                <span className="text-sm sm:text-base font-semibold text-white">
-                                                    {fd.code}
-                                                </span>
-                                                <span className="text-sm text-surface-400 truncate">
-                                                    {fd.name}
-                                                </span>
-                                            </div>
-                                            {/* Score bar */}
-                                            <div className="h-1.5 bg-surface-700/50 rounded-full mt-1.5 overflow-hidden">
+                                            {isScore && (
                                                 <div
-                                                    className={`h-full rounded-full transition-all duration-700 ease-out ${score >= 8
-                                                        ? 'bg-emerald-500'
-                                                        : score >= 4
-                                                            ? 'bg-primary-500'
-                                                            : 'bg-amber-500'
-                                                        }`}
-                                                    style={{ width: `${(score / 10) * 100}%` }}
+                                                    data-dot={row.code}
+                                                    className="relative z-20 w-4 h-4 sm:w-[18px] sm:h-[18px] rounded-full bg-primary-500 border-2 border-white shadow-lg shadow-primary-500/40"
                                                 />
-                                            </div>
-                                        </div>
-
-                                        {/* Direction indicator */}
-                                        <div className="shrink-0 flex items-center gap-1.5">
-                                            <span
-                                                className={`text-xs font-medium ${isLow ? 'text-amber-400' : 'text-emerald-400'
-                                                    }`}
-                                            >
-                                                {isLow ? fd.lowLabel : fd.highLabel}
-                                            </span>
-                                            {isLow ? (
-                                                <TrendingDown className="w-3.5 h-3.5 text-amber-400" />
-                                            ) : (
-                                                <TrendingUp className="w-3.5 h-3.5 text-emerald-400" />
                                             )}
                                         </div>
+                                    );
+                                })}
 
-                                        {/* Expand toggle */}
-                                        <span className="shrink-0 text-surface-500">
-                                            {isExpanded ? (
-                                                <ChevronUp className="w-4 h-4" />
-                                            ) : (
-                                                <ChevronDown className="w-4 h-4" />
-                                            )}
-                                        </span>
-                                    </button>
+                                {/* Right description */}
+                                <div className="px-1.5 sm:px-2 py-1.5 text-right">
+                                    <span className="text-surface-400 text-[10px] sm:text-[11px] leading-tight">
+                                        {row.highLabel}
+                                    </span>
+                                    <span className="text-primary-400 font-bold text-[11px] sm:text-xs ml-1">{row.code}</span>
+                                </div>
+                            </div>
+                        ))}
 
-                                    {/* Expanded content */}
-                                    {isExpanded && (
-                                        <div className="px-4 sm:px-5 pb-4 pt-1 border-t border-surface-700/40">
-                                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3">
-                                                <div className="p-3 rounded-lg bg-surface-900/50">
-                                                    <div className="flex items-center gap-1.5 mb-1.5">
-                                                        <TrendingDown className="w-3.5 h-3.5 text-amber-400" />
-                                                        <span className="text-xs font-semibold text-amber-400">
-                                                            Low: {fd.lowLabel}
-                                                        </span>
-                                                    </div>
-                                                    <p className="text-xs sm:text-sm text-surface-400 leading-relaxed">
-                                                        {fd.lowDescription}
-                                                    </p>
-                                                </div>
-                                                <div className="p-3 rounded-lg bg-surface-900/50">
-                                                    <div className="flex items-center gap-1.5 mb-1.5">
-                                                        <TrendingUp className="w-3.5 h-3.5 text-emerald-400" />
-                                                        <span className="text-xs font-semibold text-emerald-400">
-                                                            High: {fd.highLabel}
-                                                        </span>
-                                                    </div>
-                                                    <p className="text-xs sm:text-sm text-surface-400 leading-relaxed">
-                                                        {fd.highDescription}
-                                                    </p>
-                                                </div>
-                                            </div>
+                        {/* Footer Sten numbers */}
+                        <div className="grid grid-cols-[minmax(120px,1fr)_repeat(10,1fr)_minmax(120px,1fr)] mt-1 pt-2 border-t border-surface-600/40">
+                            <div />
+                            {STEN_COLS.map((s) => (
+                                <div
+                                    key={s}
+                                    className={`text-center text-[10px] sm:text-xs font-bold ${s === 5 || s === 6 ? 'text-primary-400' : 'text-surface-500'
+                                        }`}
+                                >
+                                    {s}
+                                </div>
+                            ))}
+                            <div />
+                        </div>
+                    </div>
+                </div>
+
+                {/* Factor Details */}
+                <div className="mb-6 sm:mb-8">
+                    <h2 className="text-lg sm:text-xl font-bold text-white mb-4">
+                        Factor Details
+                    </h2>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                        {rows.map((row) => {
+                            const isLow = row.score <= 5;
+                            return (
+                                <div
+                                    key={row.code}
+                                    className="flex items-start gap-3 px-4 py-3 rounded-xl bg-surface-800/40 border border-surface-700/50"
+                                >
+                                    <span className={`
+                    shrink-0 flex items-center justify-center w-9 h-9 rounded-lg text-sm font-bold
+                    ${row.score >= 8
+                                            ? 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/30'
+                                            : row.score >= 4
+                                                ? 'bg-primary-500/15 text-primary-400 border border-primary-500/30'
+                                                : 'bg-amber-500/15 text-amber-400 border border-amber-500/30'
+                                        }
+                  `}>
+                                        {row.score}
+                                    </span>
+                                    <div className="min-w-0">
+                                        <div className="flex items-center gap-1.5 mb-0.5">
+                                            <span className="font-bold text-sm text-white">{row.code}</span>
+                                            <span className="text-xs text-surface-400">— {row.name}</span>
                                         </div>
-                                    )}
+                                        <p className="text-xs text-surface-400 leading-relaxed">
+                                            {isLow ? row.lowDescription : row.highDescription}
+                                        </p>
+                                    </div>
                                 </div>
                             );
                         })}
                     </div>
                 </div>
 
-                {/* Reset Button */}
+                {/* Reset */}
                 <div className="text-center pb-8">
                     <button
                         onClick={onReset}
@@ -233,8 +232,7 @@ export function ResultsScreen({ scores, onReset }: ResultsScreenProps) {
               inline-flex items-center gap-2 px-6 py-3 rounded-xl
               bg-surface-800/60 border border-surface-700/50
               text-surface-300 hover:text-white text-sm font-medium
-              hover:bg-surface-700/60 hover:border-surface-600/60
-              active:scale-[0.98] transition-all duration-200 cursor-pointer
+              hover:bg-surface-700/60 active:scale-[0.98] transition-all duration-200 cursor-pointer
             "
                     >
                         <RotateCcw className="w-4 h-4" />

@@ -1,64 +1,86 @@
 import type {
     Answer,
     Gender,
-    PrimaryFactor,
     Question,
     RawScores,
     StenScores,
 } from '../types';
 import { PRIMARY_FACTORS } from '../types';
 
-// ─── Sten Conversion Tables (Placeholder) ─────────────
-// Each table maps a factor to an array of [minRaw, maxRaw] tuples.
-// Index 0 → Sten 1, Index 1 → Sten 2, ... Index 9 → Sten 10.
-// Fill these with the actual raw-score ranges from the 16PF manual.
+// ─── Sten Conversion Tables ──────────────────────────
+// Keys = 16 factors. Values = arrays where index = Sten - 1.
+// Each tuple [min, max] is the raw score range for that Sten.
+// [-1, -1] means no raw score maps to that Sten (gap).
 
-type StenRange = [number, number]; // [minRaw, maxRaw]
-type FactorStenTable = Record<PrimaryFactor, StenRange[]>;
+export type StenRange = [number, number];
+export type FactorStenMap = Record<string, StenRange[]>;
 
-export const MALE_STEN_CONVERSION_TABLE: FactorStenTable = {
-    A: [[0, 2], [3, 4], [5, 6], [7, 8], [9, 10], [11, 12], [13, 14], [15, 16], [17, 18], [19, 20]],
-    B: [[0, 1], [2, 2], [3, 3], [4, 4], [5, 5], [6, 6], [7, 7], [8, 8], [9, 9], [10, 13]],
-    C: [[0, 2], [3, 4], [5, 6], [7, 8], [9, 10], [11, 12], [13, 14], [15, 16], [17, 18], [19, 20]],
-    E: [[0, 2], [3, 4], [5, 6], [7, 8], [9, 10], [11, 12], [13, 14], [15, 16], [17, 18], [19, 20]],
-    F: [[0, 2], [3, 4], [5, 6], [7, 8], [9, 10], [11, 12], [13, 14], [15, 16], [17, 18], [19, 20]],
-    G: [[0, 2], [3, 4], [5, 6], [7, 8], [9, 10], [11, 12], [13, 14], [15, 16], [17, 18], [19, 20]],
-    H: [[0, 2], [3, 4], [5, 6], [7, 8], [9, 10], [11, 12], [13, 14], [15, 16], [17, 18], [19, 20]],
-    I: [[0, 2], [3, 4], [5, 6], [7, 8], [9, 10], [11, 12], [13, 14], [15, 16], [17, 18], [19, 20]],
-    L: [[0, 2], [3, 4], [5, 6], [7, 8], [9, 10], [11, 12], [13, 14], [15, 16], [17, 18], [19, 20]],
-    M: [[0, 2], [3, 4], [5, 6], [7, 8], [9, 10], [11, 12], [13, 14], [15, 16], [17, 18], [19, 20]],
-    N: [[0, 2], [3, 4], [5, 6], [7, 8], [9, 10], [11, 12], [13, 14], [15, 16], [17, 18], [19, 20]],
-    O: [[0, 2], [3, 4], [5, 6], [7, 8], [9, 10], [11, 12], [13, 14], [15, 16], [17, 18], [19, 20]],
-    Q1: [[0, 2], [3, 4], [5, 6], [7, 8], [9, 10], [11, 12], [13, 14], [15, 16], [17, 18], [19, 20]],
-    Q2: [[0, 2], [3, 4], [5, 6], [7, 8], [9, 10], [11, 12], [13, 14], [15, 16], [17, 18], [19, 20]],
-    Q3: [[0, 2], [3, 4], [5, 6], [7, 8], [9, 10], [11, 12], [13, 14], [15, 16], [17, 18], [19, 20]],
-    Q4: [[0, 2], [3, 4], [5, 6], [7, 8], [9, 10], [11, 12], [13, 14], [15, 16], [17, 18], [19, 20]],
+export const MALE_STEN_TABLE: FactorStenMap = {
+    A: [[0, 3], [4, 4], [5, 6], [7, 7], [8, 8], [9, 9], [10, 10], [11, 11], [12, 12], [13, 26]],
+    B: [[0, 1], [2, 2], [3, 3], [4, 4], [-1, -1], [5, 5], [6, 6], [-1, -1], [7, 7], [8, 26]],
+    C: [[0, 1], [2, 3], [4, 4], [5, 5], [6, 7], [8, 8], [9, 9], [10, 10], [11, 11], [12, 26]],
+    E: [[0, 1], [2, 2], [3, 3], [4, 4], [5, 5], [6, 7], [8, 8], [9, 9], [10, 10], [11, 26]],
+    F: [[0, 2], [3, 3], [4, 4], [5, 5], [6, 6], [7, 8], [9, 9], [10, 10], [11, 11], [12, 26]],
+    G: [[0, 1], [2, 2], [3, 4], [5, 5], [6, 6], [7, 8], [9, 9], [10, 10], [11, 11], [12, 26]],
+    H: [[0, 1], [2, 2], [3, 3], [4, 4], [5, 6], [7, 8], [9, 9], [10, 10], [11, 11], [12, 26]],
+    I: [[0, 0], [1, 1], [2, 2], [3, 4], [5, 5], [6, 6], [7, 8], [9, 9], [10, 10], [11, 26]],
+    L: [[0, 1], [2, 2], [3, 3], [4, 4], [5, 5], [6, 6], [7, 7], [8, 8], [9, 9], [10, 26]],
+    M: [[0, 1], [2, 2], [3, 3], [4, 4], [5, 5], [6, 6], [7, 7], [8, 9], [10, 10], [11, 26]],
+    N: [[0, 0], [1, 1], [2, 2], [3, 3], [4, 4], [5, 5], [6, 7], [8, 8], [9, 9], [10, 26]],
+    O: [[0, 0], [1, 1], [2, 3], [4, 4], [5, 6], [7, 7], [8, 9], [10, 10], [11, 11], [12, 26]],
+    Q1: [[0, 1], [2, 3], [4, 4], [5, 5], [6, 6], [7, 7], [8, 8], [9, 10], [11, 11], [12, 26]],
+    Q2: [[-1, -1], [0, 0], [1, 1], [2, 2], [3, 4], [5, 5], [6, 6], [7, 8], [9, 10], [11, 26]],
+    Q3: [[0, 2], [3, 4], [5, 5], [6, 6], [7, 7], [8, 8], [9, 9], [10, 10], [11, 11], [12, 26]],
+    Q4: [[0, 0], [1, 2], [3, 3], [4, 4], [5, 5], [6, 7], [8, 8], [9, 9], [10, 10], [11, 26]],
 };
 
-export const FEMALE_STEN_CONVERSION_TABLE: FactorStenTable = {
-    A: [[0, 2], [3, 4], [5, 6], [7, 8], [9, 10], [11, 12], [13, 14], [15, 16], [17, 18], [19, 20]],
-    B: [[0, 1], [2, 2], [3, 3], [4, 4], [5, 5], [6, 6], [7, 7], [8, 8], [9, 9], [10, 13]],
-    C: [[0, 2], [3, 4], [5, 6], [7, 8], [9, 10], [11, 12], [13, 14], [15, 16], [17, 18], [19, 20]],
-    E: [[0, 2], [3, 4], [5, 6], [7, 8], [9, 10], [11, 12], [13, 14], [15, 16], [17, 18], [19, 20]],
-    F: [[0, 2], [3, 4], [5, 6], [7, 8], [9, 10], [11, 12], [13, 14], [15, 16], [17, 18], [19, 20]],
-    G: [[0, 2], [3, 4], [5, 6], [7, 8], [9, 10], [11, 12], [13, 14], [15, 16], [17, 18], [19, 20]],
-    H: [[0, 2], [3, 4], [5, 6], [7, 8], [9, 10], [11, 12], [13, 14], [15, 16], [17, 18], [19, 20]],
-    I: [[0, 2], [3, 4], [5, 6], [7, 8], [9, 10], [11, 12], [13, 14], [15, 16], [17, 18], [19, 20]],
-    L: [[0, 2], [3, 4], [5, 6], [7, 8], [9, 10], [11, 12], [13, 14], [15, 16], [17, 18], [19, 20]],
-    M: [[0, 2], [3, 4], [5, 6], [7, 8], [9, 10], [11, 12], [13, 14], [15, 16], [17, 18], [19, 20]],
-    N: [[0, 2], [3, 4], [5, 6], [7, 8], [9, 10], [11, 12], [13, 14], [15, 16], [17, 18], [19, 20]],
-    O: [[0, 2], [3, 4], [5, 6], [7, 8], [9, 10], [11, 12], [13, 14], [15, 16], [17, 18], [19, 20]],
-    Q1: [[0, 2], [3, 4], [5, 6], [7, 8], [9, 10], [11, 12], [13, 14], [15, 16], [17, 18], [19, 20]],
-    Q2: [[0, 2], [3, 4], [5, 6], [7, 8], [9, 10], [11, 12], [13, 14], [15, 16], [17, 18], [19, 20]],
-    Q3: [[0, 2], [3, 4], [5, 6], [7, 8], [9, 10], [11, 12], [13, 14], [15, 16], [17, 18], [19, 20]],
-    Q4: [[0, 2], [3, 4], [5, 6], [7, 8], [9, 10], [11, 12], [13, 14], [15, 16], [17, 18], [19, 20]],
+export const FEMALE_STEN_TABLE: FactorStenMap = {
+    A: [[0, 3], [4, 5], [6, 6], [7, 7], [8, 9], [10, 10], [11, 11], [-1, -1], [12, 12], [13, 26]],
+    B: [[0, 1], [2, 2], [3, 3], [4, 4], [-1, -1], [5, 5], [6, 6], [-1, -1], [7, 7], [8, 26]],
+    C: [[0, 1], [2, 2], [3, 4], [5, 5], [6, 6], [7, 8], [9, 9], [10, 10], [11, 11], [12, 26]],
+    E: [[0, 0], [1, 1], [2, 2], [3, 3], [4, 4], [5, 6], [7, 7], [8, 8], [9, 10], [11, 26]],
+    F: [[0, 1], [2, 3], [4, 4], [5, 5], [6, 7], [8, 8], [9, 9], [10, 10], [11, 11], [12, 26]],
+    G: [[0, 1], [2, 2], [3, 4], [5, 5], [6, 7], [8, 8], [9, 9], [10, 10], [11, 11], [12, 26]],
+    H: [[0, 0], [1, 2], [3, 3], [4, 4], [5, 6], [7, 7], [8, 9], [10, 10], [11, 11], [12, 26]],
+    I: [[0, 0], [1, 2], [3, 3], [4, 5], [6, 6], [7, 7], [8, 8], [9, 9], [10, 10], [11, 26]],
+    L: [[0, 1], [2, 2], [3, 3], [4, 4], [5, 6], [7, 7], [8, 8], [9, 9], [10, 10], [11, 26]],
+    M: [[0, 1], [2, 2], [3, 3], [4, 4], [5, 5], [6, 6], [7, 8], [9, 9], [10, 10], [11, 26]],
+    N: [[0, 0], [1, 1], [2, 2], [3, 3], [4, 4], [5, 5], [6, 6], [7, 7], [8, 9], [10, 26]],
+    O: [[0, 1], [2, 3], [4, 4], [5, 6], [7, 7], [8, 9], [10, 10], [11, 11], [12, 12], [13, 26]],
+    Q1: [[0, 1], [2, 2], [3, 3], [4, 4], [5, 6], [7, 7], [8, 8], [9, 10], [11, 11], [12, 26]],
+    Q2: [[0, 0], [0, 0], [1, 1], [2, 2], [3, 4], [5, 6], [7, 7], [8, 8], [9, 12], [13, 26]],
+    Q3: [[0, 2], [3, 3], [4, 4], [5, 6], [7, 7], [8, 8], [9, 9], [10, 10], [11, 11], [12, 26]],
+    Q4: [[0, 1], [2, 2], [3, 4], [5, 5], [6, 7], [8, 8], [9, 9], [10, 11], [12, 12], [13, 26]],
 };
+
+// ─── MD Sten Conversion ──────────────────────────────
+export function calculateMDSten(rawMD: number, gender: Gender): number {
+    if (gender === 'female') {
+        if (rawMD <= 2) return 1;
+        if (rawMD <= 4) return 2;
+        if (rawMD === 5) return 3;
+        if (rawMD === 6) return 4;
+        if (rawMD === 7) return 5;
+        if (rawMD === 8) return 6;
+        if (rawMD === 9) return 7;
+        if (rawMD <= 11) return 8;
+        if (rawMD === 12) return 9;
+        return 10; // 13+
+    }
+    // Male
+    if (rawMD <= 3) return 1;
+    if (rawMD === 4) return 2;
+    if (rawMD === 5) return 3;
+    if (rawMD === 6) return 4;
+    if (rawMD === 7) return 5;
+    if (rawMD === 8) return 6;
+    if (rawMD <= 10) return 7;
+    if (rawMD === 11) return 8;
+    if (rawMD === 12) return 9;
+    return 10; // 13+
+}
 
 // ─── Step 1: Calculate Raw Scores ─────────────────────
-/**
- * Iterates through all answers and accumulates raw scores for each factor
- * by looking up the weight for the chosen option in each question's scoring.
- */
 export function calculateRawScores(
     answers: Answer[],
     questions: Question[],
@@ -73,9 +95,7 @@ export function calculateRawScores(
 
     for (const answer of answers) {
         const question = questionMap.get(answer.questionId);
-        if (!question || !question.scoring.factor || !question.scoring.weights) {
-            continue;
-        }
+        if (!question?.scoring?.factor || !question.scoring.weights) continue;
 
         const { factor, weights } = question.scoring;
         const weight = weights[answer.chosen];
@@ -88,127 +108,68 @@ export function calculateRawScores(
 }
 
 // ─── Step 2: Apply MD Corrections ─────────────────────
-/**
- * Adjusts raw scores of specific factors based on the MD Sten score.
- * Uses the exact correction logic from the 16PF manual.
- */
 export function applyMDCorrections(
     rawScores: RawScores,
     mdStenScore: number,
 ): RawScores {
-    // Clone so we don't mutate the original
-    const adjusted = { ...rawScores };
+    const adj = { ...rawScores };
 
     if (mdStenScore === 10) {
-        // Add 2 to O, Q4. Subtract 2 from C, Q3.
-        adjusted.O += 2;
-        adjusted.Q4 += 2;
-        adjusted.C -= 2;
-        adjusted.Q3 -= 2;
-        // Add 1 to L, N, Q2. Subtract 1 from A, G, H.
-        adjusted.L += 1;
-        adjusted.N += 1;
-        adjusted.Q2 += 1;
-        adjusted.A -= 1;
-        adjusted.G -= 1;
-        adjusted.H -= 1;
+        adj.O += 2; adj.Q4 += 2; adj.C -= 2; adj.Q3 -= 2;
+        adj.L += 1; adj.N += 1; adj.Q2 += 1;
+        adj.A -= 1; adj.G -= 1; adj.H -= 1;
     } else if (mdStenScore === 8 || mdStenScore === 9) {
-        // Add 1 to L, N, O, Q2, Q4.
-        adjusted.L += 1;
-        adjusted.N += 1;
-        adjusted.O += 1;
-        adjusted.Q2 += 1;
-        adjusted.Q4 += 1;
-        // Subtract 1 from A, C, G, H, Q3.
-        adjusted.A -= 1;
-        adjusted.C -= 1;
-        adjusted.G -= 1;
-        adjusted.H -= 1;
-        adjusted.Q3 -= 1;
+        adj.L += 1; adj.N += 1; adj.O += 1; adj.Q2 += 1; adj.Q4 += 1;
+        adj.A -= 1; adj.C -= 1; adj.G -= 1; adj.H -= 1; adj.Q3 -= 1;
     } else if (mdStenScore === 7) {
-        // Add 1 to O, Q4.
-        adjusted.O += 1;
-        adjusted.Q4 += 1;
-        // Subtract 1 from C, Q3.
-        adjusted.C -= 1;
-        adjusted.Q3 -= 1;
+        adj.O += 1; adj.Q4 += 1; adj.C -= 1; adj.Q3 -= 1;
     }
-    // mdStenScore ≤ 6 → no adjustments
 
-    return adjusted;
+    return adj;
 }
 
 // ─── Helper: Raw Score → Sten via Lookup ──────────────
-function lookupSten(
-    factor: PrimaryFactor,
-    rawScore: number,
-    table: FactorStenTable,
-): number {
+function lookupSten(factor: string, rawScore: number, table: FactorStenMap): number {
     const ranges = table[factor];
-    if (!ranges) return 5; // fallback
+    if (!ranges) return 5;
 
-    for (let sten = 0; sten < ranges.length; sten++) {
-        const [min, max] = ranges[sten];
-        if (rawScore >= min && rawScore <= max) {
-            return sten + 1; // Sten 1–10
-        }
+    for (let i = 0; i < ranges.length; i++) {
+        const [min, max] = ranges[i];
+        if (min === -1 && max === -1) continue; // gap
+        if (rawScore >= min && rawScore <= max) return i + 1;
     }
 
-    // If raw score exceeds all ranges, cap at 10
-    return rawScore <= ranges[0][0] ? 1 : 10;
+    // Fallback: clamp
+    return rawScore <= 0 ? 1 : 10;
 }
 
 // ─── Step 3: Convert to Sten Scores ───────────────────
-/**
- * Maps adjusted raw scores to the 1–10 Sten scale using gender-specific
- * lookup tables.
- */
 export function convertToSten(
     adjustedRawScores: RawScores,
     gender: Gender,
 ): StenScores {
-    const table =
-        gender === 'male'
-            ? MALE_STEN_CONVERSION_TABLE
-            : FEMALE_STEN_CONVERSION_TABLE;
-
+    const table = gender === 'male' ? MALE_STEN_TABLE : FEMALE_STEN_TABLE;
     const stenScores: Partial<StenScores> = {};
 
     for (const factor of PRIMARY_FACTORS) {
-        stenScores[factor] = lookupSten(factor, adjustedRawScores[factor], table);
+        const raw = adjustedRawScores[factor];
+        let sten = lookupSten(factor, raw, table);
+        sten = Math.max(1, Math.min(10, sten)); // clamp 1–10
+        stenScores[factor] = sten;
     }
 
     return stenScores as StenScores;
 }
 
 // ─── Orchestrator ─────────────────────────────────────
-/**
- * Full 3-step scoring pipeline:
- * 1. Calculate raw scores
- * 2. Apply MD corrections
- * 3. Convert to Sten scores
- */
 export function calculateResults(
     answers: Answer[],
     questions: Question[],
     gender: Gender,
-): StenScores {
-    // Step 1: Raw scores
+): { stenScores: StenScores; mdSten: number } {
     const rawScores = calculateRawScores(answers, questions);
-
-    // Convert MD raw to Sten so we can apply corrections
-    const mdTable =
-        gender === 'male'
-            ? MALE_STEN_CONVERSION_TABLE
-            : FEMALE_STEN_CONVERSION_TABLE;
-
-    // MD uses a special lookup; for now treat it like any primary factor.
-    // You can replace this with a dedicated MD Sten table later.
-    const mdStenScore = lookupSten('A' as PrimaryFactor, rawScores.MD, mdTable);
-
-    // Step 2: Apply MD corrections
-    const adjustedScores = applyMDCorrections(rawScores, mdStenScore);
-
-    // Step 3: Convert to Sten
-    return convertToSten(adjustedScores, gender);
+    const mdSten = calculateMDSten(rawScores.MD, gender);
+    const adjustedScores = applyMDCorrections(rawScores, mdSten);
+    const stenScores = convertToSten(adjustedScores, gender);
+    return { stenScores, mdSten };
 }

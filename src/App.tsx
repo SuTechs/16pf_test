@@ -6,7 +6,7 @@ import { ResultsScreen } from './components/ResultsScreen';
 import { useTestState } from './hooks/useTestState';
 import { calculateResults } from './utils/scoring';
 import questionsData from './data/questions.json';
-import type { Question, UserInfo, StenScores } from './types';
+import type { Question, UserInfo } from './types';
 
 const questions = (questionsData as { questions: Question[] }).questions;
 
@@ -42,7 +42,7 @@ function App() {
     [currentQuestion, getAnswerForQuestion],
   );
 
-  const scores: StenScores | null = useMemo(() => {
+  const results = useMemo(() => {
     if (state.phase !== 'results' || !state.userInfo) return null;
     return calculateResults(state.answers, questions, state.userInfo.gender);
   }, [state.phase, state.answers, state.userInfo]);
@@ -68,8 +68,8 @@ function App() {
         <ProcessingScreen onComplete={handleProcessingComplete} />
       )}
 
-      {state.phase === 'results' && scores && (
-        <ResultsScreen scores={scores} onReset={reset} />
+      {state.phase === 'results' && results && (
+        <ResultsScreen scores={results.stenScores} mdSten={results.mdSten} onReset={reset} />
       )}
     </div>
   );
