@@ -1,0 +1,634 @@
+{
+  "questions": [
+    {
+      "id": 1,
+      "text": "I think my memory is better than it ever was,",
+      "options": { "a": "yes", "b": "in between", "c": "no" },
+      "scoring": {}
+    },
+    {
+      "id": 2,
+      "text": "I could happily live alone, far from anyone, like a hermit.",
+      "options": { "a": "true", "b": "in between", "c": "false" },
+      "scoring": {}
+    },
+    {
+      "id": 3,
+      "text": "If I say the sky is \"down\" and winter is \"hot,\" I would call a criminal:",
+      "options": { "a": "gangster", "b": "a saint", "c": "a cloud" },
+      "scoring": {}
+    },
+    {
+      "id": 4,
+      "text": "When going to bed, I:",
+      "options": { "a": "drop off to sleep quickly", "b": "in between", "c": "have difficulty falling asleep" },
+      "scoring": {}
+    },
+    {
+      "id": 5,
+      "text": "When driving a car in a line of traffic, I feel satisfied:",
+      "options": { "a": "to remain behind most of the other cars", "b": "in between", "c": "only after I've reached the front of the line" },
+      "scoring": {}
+    },
+    {
+      "id": 6,
+      "text": "At a party I let others keep the jokes and stories going.",
+      "options": { "a": "yes", "b": "sometimes", "c": "no" },
+      "scoring": {}
+    },
+    {
+      "id": 7,
+      "text": "It's important to me not to live in messy surroundings.",
+      "options": { "a": "true", "b": "uncertain", "c": "false" },
+      "scoring": {}
+    },
+    {
+      "id": 8,
+      "text": "Most people I meet at a party are undoubtedly glad to see me.",
+      "options": { "a": "yes", "b": "sometimes", "c": "no" },
+      "scoring": {}
+    },
+    {
+      "id": 9,
+      "text": "I would rather exercise by:",
+      "options": { "a": "fencing and dancing", "b": "in between", "c": "wrestling and baseball" },
+      "scoring": {}
+    },
+    {
+      "id": 10,
+      "text": "I smile to myself at the big difference between what people do and what they say they do.",
+      "options": { "a": "yes", "b": "occasionally", "c": "no" },
+      "scoring": {}
+    },
+    {
+      "id": 11,
+      "text": "In reading about an accident I like to find out exactly how it happened.",
+      "options": { "a": "yes", "b": "in between", "c": "no" },
+      "scoring": {}
+    },
+    {
+      "id": 12,
+      "text": "When friends play a joke on me, I usually enjoy it as much as the others, without feeling at all upset.",
+      "options": { "a": "yes", "b": "occasionally", "c": "no" },
+      "scoring": {}
+    },
+    {
+      "id": 13,
+      "text": "When someone speaks angrily to me, I can forget the matter quickly.",
+      "options": { "a": "true", "b": "uncertain", "c": "false" },
+      "scoring": {}
+    },
+    {
+      "id": 14,
+      "text": "I like to \"dream up\" new ways of doing things rather than to be a practical follower of well-tried ways.",
+      "options": { "a": "true", "b": "uncertain", "c": "false" },
+      "scoring": {}
+    },
+    {
+      "id": 15,
+      "text": "When I plan something, I like to do so quite alone without any outside help.",
+      "options": { "a": "yes", "b": "occasionally", "c": "no" },
+      "scoring": {}
+    },
+    {
+      "id": 16,
+      "text": "I consider myself less \"high strung\" than most people.",
+      "options": { "a": "true", "b": "in between", "c": "false" },
+      "scoring": {}
+    },
+    {
+      "id": 17,
+      "text": "I get impatient easily with people who don't decide quickly.",
+      "options": { "a": "true", "b": "in between", "c": "false" },
+      "scoring": {}
+    },
+    {
+      "id": 18,
+      "text": "I have sometimes, even if briefly, had hateful feelings towards my parents.",
+      "options": { "a": "yes", "b": "in between", "c": "no" },
+      "scoring": {}
+    },
+    {
+      "id": 19,
+      "text": "I would rather tell my innermost thoughts to:",
+      "options": { "a": "my good friends", "b": "uncertain", "c": "a diary" },
+      "scoring": {}
+    },
+    {
+      "id": 20,
+      "text": "I think the opposite of the opposite of \"inexact\" is:",
+      "options": { "a": "casual", "b": "accurate", "c": "rough" },
+      "scoring": {}
+    },
+    {
+      "id": 21,
+      "text": "I always have lots of energy at times when I need it.",
+      "options": { "a": "always", "b": "sometimes", "c": "seldom" },
+      "scoring": {}
+    },
+    {
+      "id": 22,
+      "text": "I am more annoyed by a person who:",
+      "options": { "a": "tells off-color jokes and embarrasses people", "b": "uncertain", "c": "is late for an appointment and inconveniences me" },
+      "scoring": {}
+    },
+    {
+      "id": 23,
+      "text": "I greatly enjoy inviting guests and amusing them.",
+      "options": { "a": "true", "b": "uncertain", "c": "false" },
+      "scoring": {}
+    },
+    {
+      "id": 24,
+      "text": "I feel that:",
+      "options": { "a": "some jobs just don't have to be done so carefully as others", "b": "in between", "c": "any job should be done thoroughly if you do it at all" },
+      "scoring": {}
+    },
+    {
+      "id": 25,
+      "text": "I have always had to fight against being too shy.",
+      "options": { "a": "yes", "b": "in between", "c": "no" },
+      "scoring": {}
+    },
+    {
+      "id": 26,
+      "text": "It would be more interesting to be:",
+      "options": { "a": "a priest", "b": "uncertain", "c": "a colonel" },
+      "scoring": {}
+    },
+    {
+      "id": 27,
+      "text": "If a neighbour cheats me in small things, I would rather humour him than show him up.",
+      "options": { "a": "yes", "b": "occasionally", "c": "no" },
+      "scoring": {}
+    },
+    {
+      "id": 28,
+      "text": "I like a friend who:",
+      "options": { "a": "is efficient and practical in his interests", "b": "in between", "c": "seriously thinks out his attitudes toward life" },
+      "scoring": {}
+    },
+    {
+      "id": 29,
+      "text": "It bothers me if I hear others expressing ideas that are contrary to those that I firmly believe.",
+      "options": { "a": "true", "b": "in between", "c": "false" },
+      "scoring": {}
+    },
+    {
+      "id": 30,
+      "text": "I am over-conscientious, worrying over my past acts or mistakes.",
+      "options": { "a": "yes", "b": "in between", "c": "no" },
+      "scoring": {}
+    },
+    {
+      "id": 31,
+      "text": "If I were good at both, I would rather:",
+      "options": { "a": "play chess", "b": "in between", "c": "go bowling" },
+      "scoring": {}
+    },
+    {
+      "id": 32,
+      "text": "I like to join with people who show lively group enthusiasm.",
+      "options": { "a": "yes", "b": "in between", "c": "no" },
+      "scoring": {}
+    },
+    {
+      "id": 33,
+      "text": "I put my faith more in:",
+      "options": { "a": "insurance", "b": "in between", "c": "good fortune" },
+      "scoring": {}
+    },
+    {
+      "id": 34,
+      "text": "I can forget my worries and responsibilities whenever I need to.",
+      "options": { "a": "yes", "b": "sometimes", "c": "no" },
+      "scoring": {}
+    },
+    {
+      "id": 35,
+      "text": "It's hard for me to admit it when I am wrong.",
+      "options": { "a": "yes", "b": "sometimes", "c": "no" },
+      "scoring": {}
+    },
+    {
+      "id": 36,
+      "text": "In a factory it would be more interesting to be in charge of:",
+      "options": { "a": "machinery or keeping records", "b": "in between", "c": "talking to and hiring new people" },
+      "scoring": {}
+    },
+    {
+      "id": 37,
+      "text": "Which word does not belong with the other two?",
+      "options": { "a": "cat", "b": "near", "c": "sun" },
+      "scoring": {}
+    },
+    {
+      "id": 38,
+      "text": "Minor distractions seem:",
+      "options": { "a": "to irritate me", "b": "in between", "c": "not to bother me at all" },
+      "scoring": {}
+    },
+    {
+      "id": 39,
+      "text": "I am quite happy to be waited on, at appropriate times, by personal servants.",
+      "options": { "a": "often", "b": "sometimes", "c": "never" },
+      "scoring": {}
+    },
+    {
+      "id": 40,
+      "text": "I would rather live in a town:",
+      "options": { "a": "artistically laid out, but relatively poor", "b": "uncertain", "c": "that is rough, prosperous, and booming" },
+      "scoring": {}
+    },
+    {
+      "id": 41,
+      "text": "People should insist more than they now do that moral laws be followed.",
+      "options": { "a": "yes", "b": "sometimes", "c": "no" },
+      "scoring": {}
+    },
+    {
+      "id": 42,
+      "text": "I have been told that, as a child, I was rather:",
+      "options": { "a": "quiet and kept to myself", "b": "in between", "c": "lively and always active" },
+      "scoring": {}
+    },
+    {
+      "id": 43,
+      "text": "I enjoy routine, constructive work, using a good piece of machinery or apparatus.",
+      "options": { "a": "yes", "b": "in between", "c": "no" },
+      "scoring": {}
+    },
+    {
+      "id": 44,
+      "text": "I think most witnesses tell the truth even if it becomes embarrassing.",
+      "options": { "a": "yes", "b": "in between", "c": "no" },
+      "scoring": {}
+    },
+    {
+      "id": 45,
+      "text": "When I meet a new person I would rather:",
+      "options": { "a": "discuss his politics and social views", "b": "in between", "c": "have him tell me some good, new jokes" },
+      "scoring": {}
+    },
+    {
+      "id": 46,
+      "text": "I try to make my laughter at jokes quieter than most people's.",
+      "options": { "a": "yes", "b": "in between", "c": "no" },
+      "scoring": {}
+    },
+    {
+      "id": 47,
+      "text": "I never feel so wretched that I want to cry.",
+      "options": { "a": "true", "b": "uncertain", "c": "false" },
+      "scoring": {}
+    },
+    {
+      "id": 48,
+      "text": "In music I enjoy:",
+      "options": { "a": "military band marches", "b": "uncertain", "c": "violin solos" },
+      "scoring": {}
+    },
+    {
+      "id": 49,
+      "text": "I would rather spend two weeks in the summer:",
+      "options": { "a": "bird-watching and walking in the country with a friend or two", "b": "uncertain", "c": "being a leader of a group in a camp" },
+      "scoring": {}
+    },
+    {
+      "id": 50,
+      "text": "The effort taken in planning ahead:",
+      "options": { "a": "is never wasted", "b": "in between", "c": "is not worth it" },
+      "scoring": {}
+    },
+    {
+      "id": 51,
+      "text": "Inconsiderate acts or remarks by my neighbors do not make me touchy and unhappy.",
+      "options": { "a": "true", "b": "uncertain", "c": "false" },
+      "scoring": {}
+    },
+    {
+      "id": 52,
+      "text": "When I know I'm doing the right thing, I find my task easy.",
+      "options": { "a": "always", "b": "sometimes", "c": "seldom" },
+      "scoring": {}
+    },
+    {
+      "id": 53,
+      "text": "I would rather be:",
+      "options": { "a": "in a business office, organizing and seeing people", "b": "in between", "c": "an architect, drawing plans in a quiet room" },
+      "scoring": {}
+    },
+    {
+      "id": 54,
+      "text": "\"House\" is to \"room\" as \"tree\" is to:",
+      "options": { "a": "forest", "b": "plant", "c": "leaf" },
+      "scoring": {}
+    },
+    {
+      "id": 55,
+      "text": "Things go wrong for me:",
+      "options": { "a": "rarely", "b": "occasionally", "c": "frequently" },
+      "scoring": {}
+    },
+    {
+      "id": 56,
+      "text": "In most things in life, I believe in:",
+      "options": { "a": "taking a gamble", "b": "in between", "c": "playing it safe" },
+      "scoring": {}
+    },
+    {
+      "id": 57,
+      "text": "Some people may think I talk too much.",
+      "options": { "a": "likely", "b": "uncertain", "c": "unlikely" },
+      "scoring": {}
+    },
+    {
+      "id": 58,
+      "text": "I admire more:",
+      "options": { "a": "a clever, but undependable man", "b": "in between", "c": "a man who is average, but strong to resist temptations" },
+      "scoring": {}
+    },
+    {
+      "id": 59,
+      "text": "I make decisions:",
+      "options": { "a": "faster than many people", "b": "uncertain", "c": "slower than most people" },
+      "scoring": {}
+    },
+    {
+      "id": 60,
+      "text": "I am more impressed by:",
+      "options": { "a": "acts of skill and grace", "b": "in between", "c": "acts of strength and power" },
+      "scoring": {}
+    },
+    {
+      "id": 61,
+      "text": "I am considered a cooperative person.",
+      "options": { "a": "yes", "b": "in between", "c": "no" },
+      "scoring": {}
+    },
+    {
+      "id": 62,
+      "text": "I enjoy talking more with polished, sophisticated people than with outspoken, down-to-earth individuals.",
+      "options": { "a": "yes", "b": "in between", "c": "no" },
+      "scoring": {}
+    },
+    {
+      "id": 63,
+      "text": "I prefer to:",
+      "options": { "a": "keep my problems to myself", "b": "in between", "c": "talk about them to my friends" },
+      "scoring": {}
+    },
+    {
+      "id": 64,
+      "text": "If a person doesn't answer when I make a suggestion, I feel I've said something silly.",
+      "options": { "a": "true", "b": "in between", "c": "false" },
+      "scoring": {}
+    },
+    {
+      "id": 65,
+      "text": "I learned more in my school days by:",
+      "options": { "a": "going to class", "b": "in between", "c": "reading tools" },
+      "scoring": {}
+    },
+    {
+      "id": 66,
+      "text": "I avoid getting involved in social responsibilities and organizations.",
+      "options": { "a": "true", "b": "sometimes", "c": "false" },
+      "scoring": {}
+    },
+    {
+      "id": 67,
+      "text": "When a problem gets hard and there is a lot to do, I try:",
+      "options": { "a": "a different problem", "b": "in between", "c": "a different attack on the same problem" },
+      "scoring": {}
+    },
+    {
+      "id": 68,
+      "text": "I get strong emotional mood-anxiety, anger, laughter, etc. that seem to arise without much actual cause.",
+      "options": { "a": "yes", "b": "occasionally", "c": "no" },
+      "scoring": {}
+    },
+    {
+      "id": 69,
+      "text": "My mind doesn't work so clearly at some times as it does at others.",
+      "options": { "a": "true", "b": "in between", "c": "false" },
+      "scoring": {}
+    },
+    {
+      "id": 70,
+      "text": "I am happy to oblige people by making appointments at times they prefer, even if it is a bit inconvenient to me.",
+      "options": { "a": "yes", "b": "sometimes", "c": "no" },
+      "scoring": {}
+    },
+    {
+      "id": 71,
+      "text": "I think the proper number to continue the series 1, 2, 3, 6, 5, is:",
+      "options": { "a": "10", "b": "5", "c": "7" },
+      "scoring": {}
+    },
+    {
+      "id": 72,
+      "text": "I have occasionally had a brief touch of faintness, dizziness, or light-headedness for no apparent reason.",
+      "options": { "a": "yes", "b": "uncertain", "c": "no" },
+      "scoring": {}
+    },
+    {
+      "id": 73,
+      "text": "I would rather do without something than put a waiter or waitress to a lot of extra trouble.",
+      "options": { "a": "yes", "b": "occasionally", "c": "no" },
+      "scoring": {}
+    },
+    {
+      "id": 74,
+      "text": "I live for the \"here and now\" more than most people do.",
+      "options": { "a": "true", "b": "uncertain", "c": "false" },
+      "scoring": {}
+    },
+    {
+      "id": 75,
+      "text": "At a party, I like:",
+      "options": { "a": "to get into worthwhile conversation", "b": "in between", "c": "to see people relax and completely let go" },
+      "scoring": {}
+    },
+    {
+      "id": 76,
+      "text": "I speak my mind no matter how many people are around.",
+      "options": { "a": "yes", "b": "sometimes", "c": "no" },
+      "scoring": {}
+    },
+    {
+      "id": 77,
+      "text": "If I could go back in time. I'd rather meet:",
+      "options": { "a": "Columbus", "b": "uncertain", "c": "Shakespeare" },
+      "scoring": {}
+    },
+    {
+      "id": 78,
+      "text": "I have to stop myself from getting too involved in trying to straighten out other people's problems.",
+      "options": { "a": "yes", "b": "sometimes", "c": "no" },
+      "scoring": {}
+    },
+    {
+      "id": 79,
+      "text": "In a store or market, I would prefer to:",
+      "options": { "a": "design and do window displays", "b": "uncertain", "c": "be a cashier" },
+      "scoring": {}
+    },
+    {
+      "id": 80,
+      "text": "If people think poorly of me, I can still go on calmly in my own mind.",
+      "options": { "a": "yes", "b": "in between", "c": "no" },
+      "scoring": {}
+    },
+    {
+      "id": 81,
+      "text": "If an old friend seems cold and reserved to me, I usually",
+      "options": { "a": "just think \"He's in a bad mood,\"", "b": "uncertain", "c": "worry about what I may have done wrong" },
+      "scoring": {}
+    },
+    {
+      "id": 82,
+      "text": "More trouble arises from people:",
+      "options": { "a": "changing and meddling with ways that are already satisfactory", "b": "uncertain", "c": "turning down new, promising methods" },
+      "scoring": {}
+    },
+    {
+      "id": 83,
+      "text": "I greatly enjoy talking to people about local problems.",
+      "options": { "a": "yes", "b": "sometimes", "c": "no" },
+      "scoring": {}
+    },
+    {
+      "id": 84,
+      "text": "Prim, strict people don't seem to get along well with me.",
+      "options": { "a": "true", "b": "sometimes", "c": "false" },
+      "scoring": {}
+    },
+    {
+      "id": 85,
+      "text": "I guess I'm less irritable than most people.",
+      "options": { "a": "true", "b": "uncertain", "c": "false" },
+      "scoring": {}
+    },
+    {
+      "id": 86,
+      "text": "I may be less considerate of other people than they are of me.",
+      "options": { "a": "true", "b": "sometimes", "c": "false" },
+      "scoring": {}
+    },
+    {
+      "id": 87,
+      "text": "I would just as soon let someone else have all the worry of being in charge of an organization of which I am a member.",
+      "options": { "a": "true", "b": "uncertain", "c": "false" },
+      "scoring": {}
+    },
+    {
+      "id": 88,
+      "text": "If the two hands on a watch come together exactly every 65 minutes (according to an accurate watch), the watch is running:",
+      "options": { "a": "slow", "b": "on time", "c": "fast" },
+      "scoring": {}
+    },
+    {
+      "id": 89,
+      "text": "I am bored:",
+      "options": { "a": "often", "b": "occasionally", "c": "seldom" },
+      "scoring": {}
+    },
+    {
+      "id": 90,
+      "text": "People say that I like to have things done my own way.",
+      "options": { "a": "true", "b": "occasionally", "c": "false" },
+      "scoring": {}
+    },
+    {
+      "id": 91,
+      "text": "I find it wise to avoid too much excitement because it tends to wear me out.",
+      "options": { "a": "yes", "b": "occasionally", "c": "no" },
+      "scoring": {}
+    },
+    {
+      "id": 92,
+      "text": "At home, with a bit of spare time, I:",
+      "options": { "a": "use it chatting and relaxing", "b": "in between", "c": "arrange to fill it with special jobs" },
+      "scoring": {}
+    },
+    {
+      "id": 93,
+      "text": "I am shy, and careful, about making friendships with new people.",
+      "options": { "a": "yes", "b": "occasionally", "c": "no" },
+      "scoring": {}
+    },
+    {
+      "id": 94,
+      "text": "I think that what people say in poetry could be put just as exactly in plain prose.",
+      "options": { "a": "yes", "b": "sometimes", "c": "no" },
+      "scoring": {}
+    },
+    {
+      "id": 95,
+      "text": "I suspect that people who act friendly to me can be disloyal behind my back.",
+      "options": { "a": "yes, generally", "b": "occasionally", "c": "no, rarely" },
+      "scoring": {}
+    },
+    {
+      "id": 96,
+      "text": "I think that even the most dramatic experiences during the year leave my personality much the same as it was,",
+      "options": { "a": "yes", "b": "sometimes", "c": "no" },
+      "scoring": {}
+    },
+    {
+      "id": 97,
+      "text": "It would seem more interesting to be a",
+      "options": { "a": "naturalist and work with plants", "b": "uncertain", "c": "public accountant or insurance man" },
+      "scoring": {}
+    },
+    {
+      "id": 98,
+      "text": "I get unreasonable fears or distastes for somethings, for example, particular animals, plants, and so on.",
+      "options": { "a": "yes", "b": "sometimes", "c": "no" },
+      "scoring": {}
+    },
+    {
+      "id": 99,
+      "text": "I like to think out ways in which our world could be changed to improve it.",
+      "options": { "a": "yes", "b": "in between", "c": "no" },
+      "scoring": {}
+    },
+    {
+      "id": 100,
+      "text": "I prefer games where:",
+      "options": { "a": "you're on a team or have a partner", "b": "uncertain", "c": "each person is on his own" },
+      "scoring": {}
+    },
+    {
+      "id": 101,
+      "text": "At night I have rather fantastic or ridiculous dreams.",
+      "options": { "a": "yes", "b": "occasionally", "c": "no" },
+      "scoring": {}
+    },
+    {
+      "id": 102,
+      "text": "If left in a lonely house I tend, after a time, to feel a bit anxious or fearful.",
+      "options": { "a": "yes", "b": "sometimes", "c": "no" },
+      "scoring": {}
+    },
+    {
+      "id": 103,
+      "text": "I may deceive people by being friendly when I really dislike them.",
+      "options": { "a": "yes", "b": "sometimes", "c": "no" },
+      "scoring": {}
+    },
+    {
+      "id": 104,
+      "text": "Which word does not belong with the other two?",
+      "options": { "a": "think", "b": "see", "c": "hear" },
+      "scoring": {}
+    },
+    {
+      "id": 105,
+      "text": "If Mary's mother is Fred's father's sister, what relation is Fred to Mary's father?",
+      "options": { "a": "cousin", "b": "nephew", "c": "uncle" },
+      "scoring": {}
+    }
+  ]
+}
